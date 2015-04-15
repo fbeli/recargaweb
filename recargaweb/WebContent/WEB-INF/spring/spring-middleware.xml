@@ -1,0 +1,120 @@
+
+<beans default-autowire="byType"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:annotation-config />
+
+	<context:component-scan	base-package="br.com.becb.middlewarerecarga.servicos.cliente.rv" />
+	<context:component-scan base-package="br.com.becb.middlewarerecarga.servicos" />
+	<context:component-scan base-package="br.com.becb.middlewarerecarga.*" />
+	<context:component-scan base-package="br.com.becb.middlewarerecarga.dao.hibernate" />
+
+	<context:property-placeholder location="classpath:rv.properties"/>
+
+	<bean id="consultaRV"
+		class="br.com.becb.middlewarerecarga.servicos.ConsultaRV" />
+
+	<bean id="dataSourceJDBC" autowire-candidate="false" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="username" value="root"/> <property name="password" value="eumesmo"/> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/> <property 
+		name="url" value="jdbc:mysql://localhost:3306/recarga"/> </bean>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/recarga" />
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+
+		<property name="properties">
+			<props>
+				<prop key="c3p0.minPoolSize">0</prop>
+				<prop key="hc3p0.maxPoolSize">1000</prop>
+				<prop key="hc3p0.timeout">3000</prop>
+				<prop key="c3p0.acquire_increment">10</prop>
+				<prop key="c3p0.max_statement">50</prop>
+				<prop key="hibernate.c3p0.idle_test_period">60</prop>
+				<prop key="c3p0.preferredTestQuery">SELECT 1;</prop>
+				<prop key="hibernate.c3p0.testConnectionOnCheckout">false</prop>
+				<prop key="user">root</prop>
+				<prop key="password">eumesmo</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--<bean id="dataSourceJDBC" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" autowire-candidate="false" >
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="user" value="root" />
+		<property name="password" value="eumesmo" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/recarga" />
+		<property name="maxPoolSize" value="4" />
+		<property name="acquireIncrement" value="1" />
+		<property name="maxIdleTime" value="120" />
+		<property name="acquireRetryAttempts" value="10" />
+		<property name="initialPoolSize" value="4" />
+	</bean-->
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceJDBC"/>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource"  ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">false</prop>
+			</props>
+		</property>
+
+<!-- usado par o hibernate -->
+		<property name="annotatedClasses">
+			<array>
+				<value>br.com.becb.middlewarerecarga.entidades.Erro</value>
+				<value>br.com.becb.middlewarerecarga.entidades.Operadora</value>
+				<value>br.com.becb.middlewarerecarga.entidades.Produto</value>
+				<value>br.com.becb.middlewarerecarga.entidades.DDDProduto</value>
+				<value>br.com.becb.middlewarerecarga.entidades.Recarga</value>
+				<value>br.com.becb.middlewarerecarga.entidades.Usuario</value>
+				<value>br.com.becb.middlewarerecarga.entidades.PermissaoUsuario</value>
+				
+			</array>
+		</property>
+
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:advice transaction-manager="transactionManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- aop:config> <aop:advisor advice-ref="txAdvice" pointcut="execution(* 
+		br.com.itexto.springforum.dao.hibernate.HB*.*(..))"/> </aop:config -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+<bean id="jdbcDaodddProduto" class="br.com.becb.middlewarerecarga.dao.jdbc.JDBCDDDProduto">
+	<property name="dataSource" ref="dataSourceJDBC"/>
+</bean>
+<bean id="jdbcDaoProduto" class="br.com.becb.middlewarerecarga.dao.jdbc.JDBCProduto">
+	<property name="dataSource" ref="dataSourceJDBC"/>
+</bean>
+<bean id="jdbcDaoOperadora" class="br.com.becb.middlewarerecarga.dao.jdbc.JDBCOperadora">
+	<property name="dataSource" ref="dataSourceJDBC"/>
+</bean>
+
+
+</beans>

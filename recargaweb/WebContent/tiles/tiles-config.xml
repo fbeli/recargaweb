@@ -1,0 +1,51 @@
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<definition name="main" template="/views/templates/main.jsp">
+		<put-attribute name="titulo" value="Recarga online"/>
+		<put-attribute name="cabecalho" value="/views/templates/cabecalhoBasico.jsp"/>
+		<put-attribute name="rodape" value="/views/templates/rodapeBasico.jsp"/>
+	</definition>
+	
+    <definition name="index"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/recargahome.jsp"/>
+    </definition>
+    
+      <definition name="valores"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/listaValores.jsp"/>
+    </definition>
+    
+      <definition name="confirmacaoDeRecarga"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/confirmacaoDeRecarga.jsp"/>
+    </definition>
+     <definition name="confirmacaoDeRecargaPIN"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/confirmacaoDeRecargaPIN.jsp"/>
+    </definition>
+     <definition name="finalizarRecarga"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/solicitarSenha.jsp"/>
+    </definition>
+     <definition name="erroRecarga"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/erroRecarga.jsp"/>
+    </definition>
+    
+      <definition name="admin"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/admin.jsp"/>
+    </definition>
+     <definition name="cadastroUser"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/admin.jsp"/>
+    </definition>
+    
+     <definition name="tipoPagamento"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/tipoPagamento.jsp"/>
+    </definition>
+    <definition name="listaTransacoes"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/transacoes.jsp"/>
+    </definition>
+    <definition name="produtos"  extends="main" >
+    	<put-attribute name="conteudo" value="/views/produtos.jsp"/>
+    </definition>
+
+
+</tiles-definitions>

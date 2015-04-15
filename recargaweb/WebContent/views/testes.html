@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="generator"
+	content="CoffeeCup HTML Editor (www.coffeecup.com)">
+<meta name="dcterms.created" content="seg, 23 mar 2015 13:50:48 GMT">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="../recursos/estilos/recargahome.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet"  type="text/css" href="../recursos/estilos/abre_div.css" />
+<title></title>
+
+	<script src="../recursos/script/jquery-1.9.1.js"></script>
+</head>
+<body>
+	   
+       <script>
+    function testar(divlocal){
+    
+    alert(divlocal);
+         $("div").each(function(i){ 
+                        // Aplica a cor de fundo 
+            $(this).css("background", "red"); 
+
+
+        });
+        document.getElementById(divlocal).style.background = "blue";  
+    
+    }   
+       </script>
+ 
+<div id="site">
+
+<form action="solicitarRecarga" id="formRecarga">
+
+    <input type="hidden" name="ddd" value="21">
+    <input type="hidden" name="operadora" value="claro">
+    <input type="hidden" name="fone" value="987654321">
+     <input type="hidden"name="codProduto" value="0">
+    <input type="hidden" name="valor" value="0">                
+                <div id="esquerda">
+                    <div class="valoresquerdo" onclick="testar('divvalor6.0');" id="divvalor6.0">
+                        <h1 id="valor">R$ 6,00</h1>
+                        
+                        <input type="radio" checked="checked" name="codProduto"
+                            value="6.0" />
+
+                    </div>
+                </div>
+                <div id="direita">
+                    <div class="valordireito"  id="divvalor13.0" onclick="testar('divvalor13.0');">
+                        <h1 id="valor">R$ 13,00</h1>
+                        <input type="radio" name="codProduto"
+                            value="13.0" />
+                    </div>
+                </div>
+                <div id="esquerda">
+                    <div class="valoresquerdo" onclick="testar('divvalor18.0');"  >
+                       
+                         <h1 id="divvalor18.0" class="valor">R$ 18,00</h1>
+                        
+                        <input type="radio" checked="checked" name="codProduto"
+                            value="18.0" />
+
+                    </div>
+                </div>
+                
+                <div id="direita">
+                    <div class="valordireito"  id="divvalor22.0">
+                        
+
+                            <h1 id="valor">R$ 22,00</h1>
+                            
+
+                        
+                    </div>
+                </div>                
+                     
+
+</form>
+<div id="submit_list">
+    <button id="popup_window" data-popup-target="#example-popup">Recarregar</button>
+</div>
+
+</div>
+
+
+	<div id="example-popup" class="popup">
+    <div class="popup-body">	<span class="popup-exit"></span>
+
+        <div class="popup-content">
+            	<h2 class="popup-title">Simple lightweight popup [Hit Esc to Stop]</h2>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ullamcorper nulla et gravida interdum. Quisque dignissim a turpis at posuere. Praesent cursus turpis magna, quis pulvinar est vehicula</p>
+        </div>
+    </div>
+</div>
+<div class="popup-overlay"></div>
+
+<script type='text/javascript'>
+
+
+
+$(function(){  
+    $("#div1").click(function(){
+        alert("A div foi clicada.")
+    });
+});
+            // Quando o documento estiver sido carregado 
+            $(document).ready(function(){
+                // Quando o botão for clicado 
+                //$(‘button’).click(function(){ 
+                    // pesquisa de todos os elementos ‘div’ na página 
+
+
+                $([id*=”divvalor”]).click(function(){ 
+                    alert("chegou");
+                    $("div").each(function(i){ 
+                        // Aplica a cor de fundo 
+                        $(this).css("background", "white"); 
+
+                    });
+                    $('[id*=”divvalor”]').css("background", "red"); 
+                }); 
+
+            }); 
+   
+
+
+</script>
+
+
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+jQuery(document).ready(function ($) {
+
+    $('[data-popup-target]').click(function () {
+        $('html').addClass('overlay');
+        var activePopup = $(this).attr('data-popup-target');
+        $(activePopup).addClass('visible');
+
+    });
+
+    $(document).keyup(function (e) {
+        if (e.keyCode == 27 && $('html').hasClass('overlay')) {
+            clearPopup();
+        }
+    });
+
+    $('.popup-exit').click(function () {
+        clearPopup();
+
+    });
+
+    $('.popup-overlay').click(function () {
+        clearPopup();
+    });
+
+    function clearPopup() {
+        $('.popup.visible').addClass('transitioning').removeClass('visible');
+        $('html').removeClass('overlay');
+
+        setTimeout(function () {
+            $('.popup').removeClass('transitioning');
+        }, 200);
+    }
+
+});
+});//]]>  
+
+</script>
+</body>

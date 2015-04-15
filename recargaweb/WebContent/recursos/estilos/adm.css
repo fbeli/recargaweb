@@ -1,0 +1,10 @@
+@CHARSET "ISO-8859-1";
+input{font-size:17px; margin-left:5px; border-width:thin;border-style: solid;border-color: #000; font-weight:bold;}
+select {
+	border-width:thin;border-style: solid;
+}
+
+table, td, th {
+    border: 1px solid blue;
+}
+table.tableAdmin{ margin: 0 auto; border:thin;  border-style: solid;  border-style: inherit;	border-collapse: collapse;}
